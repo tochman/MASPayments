@@ -1,0 +1,29 @@
+.container
+  %h1 Tack för din betalning.
+  %p.thank-you
+    Du har betalat
+    %strong
+      = ([@charge.amount/100, @charge.currency.upcase].join(' '))
+    med ditt
+    %strong
+      = @charge.source.brand
+    med nummer
+    %strong
+      = succeed '.' do
+        = ['**** **** ****', @charge.source.last4].join(' ')
+
+  %p
+    Betalningen kommer att synas på ditt utdrag med referensen
+    %strong
+      = @charge.description
+
+  %p
+    Om du har några frågor eller funderingar -
+    = succeed '.' do
+      %a{ href: 'mailto:info@makersacademy.se' } kontakta oss
+
+  %p
+    Ett email med uppgifter om din betalning har skickats till
+    %strong
+      = @charge.receipt_email
+

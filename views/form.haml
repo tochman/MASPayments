@@ -1,0 +1,62 @@
+.container
+    .row
+        .col-sm-12
+            %h1 Säker betalning
+            %p
+                Ingen kreditkortsdata sparas på våra servrar utan hanteras av
+                %a{ href: 'http://stripe.com'} Stripe.com
+                and <strong>sparas aldrig av oss.</strong>
+            %p Alla fält är obligatoriska.
+        %div.payment-errors
+        %form.form-horizontal{action: '/pay', method: 'POST', role: 'form', 'data-parsley-validate' => '', id: 'payment-form'}
+            .payment-errors.col-md-12
+            .form-group
+                .col-sm-2
+                    %label Namn
+                .col-sm-10
+                    %input{name: 'name', type: 'text', class: 'form-control', required: ''}
+            .form-group
+                .col-sm-2
+                    %label Email
+                .col-sm-10
+                    %input{name: 'email', type: 'email', class: 'form-control', required: ''}
+            .form-group
+                .col-sm-2
+                    %label Address
+                .col-sm-10
+                    %input{name: 'address', type: 'text', class: 'form-control', placeholder: 'Gata', required: ''}
+                .col-sm-4.col-sm-offset-2
+                    %input{name: 'city', type: 'text', class: 'form-control', placeholder: 'Stad', required: ''}
+                .col-sm-2
+                    %input{name: 'zip', type: 'text', pattern: '\d*', size: 5, class: 'form-control', placeholder: 'Postnummer', required: '' }
+                .col-sm-4
+                    %input{name: 'country', type: 'text', class: 'form-control', placeholder: 'Land', required: ''}
+            .form-group
+                .col-sm-2
+                    %label Order
+                .col-sm-5
+                    %select#amount{name: 'amount', type: 'number'}
+                        - products.each do |p|
+                            %option{ value: "#{p[:value]}"} #{p[:text]}
+            .form-group
+                .col-sm-2
+                    %label Kortinformation
+                .col-sm-4
+                    %input{'data-stripe' => 'name', name: 'cc_name', type: 'text', class: 'form-control', required: '', placeholder: 'Namn på kort'}
+                    %input{'data-stripe' => 'number', size: '20', type: 'text', pattern: '\d*', placeholder: 'Kortnummer', name: 'card-number', required: '', 'data-parsley-length' => '[15,20]', class: 'form-control'}
+            .form-group
+                .col-lg-4.col-lg-offset-2
+                    .row#expiry
+                        .col-sm-1
+                            %select{'data-stripe' => 'exp-month', name: 'expiration-month', style: 'width:auto;'}
+                                - months_range.each do |month|
+                                    %option{value: "#{month}"} #{month}
+                        .col-sm-1
+                            %h3{style: 'margin-left: 13px; color: black;'} /
+                        .col-sm-1
+                            %select{'data-stripe' => 'exp-year', name: 'expiration-year', style: 'width:auto;'}
+                                - years_range.each do |year|
+                                    %option{ value: "#{year}"} #{year}
+                        .col-sm-4{ style: 'margin-left: 30px;' }
+                            %input{'data-stripe' => 'cvc', size: '4', type: 'text', pattern: '\d*', placeholder: 'CVC', class: 'form-control', name: 'cc-cvc', required: '', 'data-parsley-length' => '[3,4]' }
+            %button{type: 'submit', class:'btn btn-default'}Skicka

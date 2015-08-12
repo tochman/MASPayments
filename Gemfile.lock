@@ -26,7 +26,6 @@ GEM
     coffee-script-source (1.7.0)
     diff-lcs (1.2.5)
     dotenv (0.10.0)
-    excon (0.32.1)
     execjs (2.0.2)
     haml (4.0.5)
       tilt
@@ -36,9 +35,9 @@ GEM
     launchy (2.4.2)
       addressable (~> 2.3)
     logger (1.2.8)
-    mandrill-api (1.0.51)
-      excon (>= 0.16.0, < 1.0)
-      json (>= 1.7.7, < 2.0)
+    mailgun-ruby (1.0.3)
+      json (~> 1.8)
+      rest-client (~> 1.6)
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.5.2)
@@ -121,7 +120,7 @@ DEPENDENCIES
   haml
   launchy
   logger
-  mandrill-api
+  mailgun-ruby (~> 1.0.3)
   money
   poltergeist
   pry

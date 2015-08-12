@@ -6,7 +6,7 @@ require 'haml'
 require 'logger'
 require 'money'
 require 'dotenv'
-require 'mandrill'
+require 'mailgun'
 require 'rack/ssl-enforcer'
 require 'pry'
 
@@ -71,7 +71,7 @@ class MASPayment < Sinatra::Base
         customer: customer.id,
         description: 'Makers Academy - kursavgift'
     )
-    Thread.new { Notifier.new.deliver(email: params[:email], name: params[:name], amount: params[:amount]) }
+    Thread.new { Notifier.new(email: params[:email], name: params[:name], amount: params[:amount]) }
     haml :confirmation
   end
 

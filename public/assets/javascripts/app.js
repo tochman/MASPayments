@@ -1,10 +1,13 @@
-/**
- * My script file
+/****************************************************
+ * Based on Stripe documentation for custom forms
  *
- * @depend stripe.js
+ * @depend stripe.js (from https://js.stripe.com/v2/)
  * @depend jquery.js
  * @depend parsley.js
- */
+ * @depend sv.js (parsley swedish locale)
+ *
+ ****************************************************/
+
 jQuery(function($) {
   $('#payment-form').submit(function(event) {
     var $form = $(this);
@@ -24,12 +27,6 @@ function stripeResponseHandler(status, response) {
 
   if (response.error) {
     // Show the errors on the form
-    $(document).trigger("add-alerts", [
-      {
-        'message': "This is a warning.",
-        'priority': 'warning'
-      }
-    ]);
     $form.find('.payment-errors').text(response.error.message);
     $form.find('button').prop('disabled', false);
   } else {
